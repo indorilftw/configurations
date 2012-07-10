@@ -338,11 +338,12 @@ let Tlist_Inc_Winwidth = 0
 if has ("autocmd")
 
 "{{{C and C++
+
 autocmd BufNewFile *.c,*.cpp,*.h so /Users/indoril/.vim/c_template
-autocmd BufNewFile *.c,*.cpp,*.h exe "1," . 10 . "g/File Name :.*/s//File Name : " .expand("%")
-autocmd BufNewFile *.c,*.cpp,*.h exe "1," . 10 . "g/Creation Date :.*/s//Creation Date : " .strftime("%d-%m-%Y")
+autocmd BufNewFile *.c,*.cpp,*.h exe "1," . 6 . "g/File Name :.*/s//File Name : " .expand("%")
+autocmd BufNewFile *.c,*.cpp,*.h exe "1," . 6 . "g/Creation Date :.*/s//Creation Date : " .strftime("%d-%m-%Y")
 autocmd Bufwritepre,filewritepre *.c,*.cpp,*.h execute "normal ma"
-autocmd Bufwritepre,filewritepre *.c,*.cpp,*.h exe "1," . 10 . "g/Last Modified :.*/s/Last Modified :.*/Last Modified : " .strftime("%+")
+autocmd Bufwritepre,filewritepre *.c,*.cpp,*.h exe "1," . 6 . "g/Last Modified :.*/s/Last Modified :.*/Last Modified : " .strftime("%+")
 autocmd bufwritepost,filewritepost *.c,*.cpp,*.h execute "normal `a"
 autocmd BufNewFile,BufRead *.c,*.h set smartindent cinwords cinwords=if,else,for,do,while,switch
 autocmd BufNewFile,BufRead *.cpp set smartindent cinwords cinwords=if,else,for,do,while,switch,class
@@ -404,7 +405,7 @@ autocmd bufwritepost,filewritepost *.py execute "normal `a"
 
 "{{{TeX
 autocmd BufNewFile,BufRead *.tex set tw=78 noet
-autocmd BufNewFile,BufRead Makefile,makefile set ts=8 sw=8 noet nosi noai
+autocmd BufNewFile,BufRead Makefile,makefile set ts=4 sw=4 noet nosi noai
 "}}}
 "
 "{{{PHP

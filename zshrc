@@ -35,7 +35,7 @@ plugins=(git autojump extract macports osx )
 source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
-export PATH=/Library/Frameworks/Python.framework/Versions/2.7/bin:/usr/bin:/sw/sbin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/git/bin:/usr/local/MacGPG2/bin:/usr/texbin:/usr/X11/bin:/opt/local/bin:/usr/local/smlnj-110.73/bin/:/Applications/ns-2.34/ns-2.34/:/Applications/ns-2.34/nam-1.14/:/Applications/ns-2.34/xgraph-12.1/:/opt/local/lib/swipl-5.10.4/bin/i386-darwin10.7.0::/usr/X11R6/bin:/sw/bin:~/bins/pypy-1.8/bin/:~/Scripts:~/Source/checker:/sw/bin/
+export PATH=/Library/Frameworks/Python.framework/Versions/2.7/bin:/Applications/MacVim.app/Contents/MacOS:/usr/bin:/sw/sbin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/git/bin:/usr/local/MacGPG2/bin:/usr/texbin:/usr/X11/bin:/opt/local/bin:/usr/local/smlnj-110.73/bin/:/Applications/ns-2.34/ns-2.34/:/Applications/ns-2.34/nam-1.14/:/Applications/ns-2.34/xgraph-12.1/:/opt/local/lib/swipl-5.10.4/bin/i386-darwin10.7.0::/usr/X11R6/bin:/sw/bin:~/bins/pypy-1.8/bin/:~/Scripts:~/Source/checker:/sw/bin/:/Library/Apache/ant/bin
 
 
 #Custom aliases
