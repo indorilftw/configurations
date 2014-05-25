@@ -5,7 +5,7 @@ ZSH=$HOME/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="juanghurtado"
+ZSH_THEME="indoril"
 
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
@@ -29,21 +29,27 @@ ZSH_THEME="juanghurtado"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git autojump extract macports osx )
+plugins=(github git autojump extract macports osx brew gem pip)
 
+export BAT_CHARGE='batcharge.py'
 
 source $ZSH/oh-my-zsh.sh
+source /Library/Frameworks/Python.framework/Versions/2.7/bin/virtualenvwrapper.sh
+setopt HIST_IGNORE_SPACE # Hide commands that start with space
+unsetopt correct_all
 
 # Customize to your needs...
-export PATH=/Library/Frameworks/Python.framework/Versions/2.7/bin:/Applications/MacVim.app/Contents/MacOS:/usr/bin:/sw/sbin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/git/bin:/usr/local/MacGPG2/bin:/usr/texbin:/usr/X11/bin:/opt/local/bin:/usr/local/smlnj-110.73/bin/:/Applications/ns-2.34/ns-2.34/:/Applications/ns-2.34/nam-1.14/:/Applications/ns-2.34/xgraph-12.1/:/opt/local/lib/swipl-5.10.4/bin/i386-darwin10.7.0::/usr/X11R6/bin:/sw/bin:~/bins/pypy-1.8/bin/:~/Scripts:~/Source/checker:/sw/bin/:/Library/Apache/ant/bin
-
+export EDITOR=/usr/local/bin/subl
+export PATH=~/.rvm/gems/ruby-1.9.3-p194/bin:/Users/indoril/.rvm/bin:/usr/local/bin:/usr/bin:/sw/sbin:/bin:/usr/sbin:/sbin:/usr/local/git/bin:/usr/local/MacGPG2/bin:/usr/texbin:/usr/X11/bin:/opt/local/bin:/opt/local/lib/swipl-5.10.4/bin/i386-darwin10.7.0::/usr/X11R6/bin:/sw/bin:~/bins/pypy-2.2.1/bin:~/Scripts:~/Source/checker:/sw/bin:/Library/Apache/ant/bin:~/bins:/usr/local/sbin:~/Library/Haskell/bin:~/bins/pypy3-2.1/bin:/Library/Frameworks/Python.framework/Versions/2.7/bin:/Library/Frameworks/Python.framework/Versions/3.3/bin:$PATH
 
 #Custom aliases
 alias ping='ping -c 4'
-alias grep='grep --color=auto'
+#alias grep='grep --color=auto'
+alias grep='/opt/local/bin/grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias l='ls -CF'
 alias la='ls -AF'
+alias lla='ls -la'
 alias x='exit'
 alias c='clear'
 alias cd..='cd ..'
@@ -56,6 +62,8 @@ alias ftpstart='sudo -s launchctl load -w /System/Library/LaunchDaemons/ftp.plis
 alias ftpstop='sudo -s launchctl unload -w /System/Library/LaunchDaemons/ftp.plist'
 alias music='mplayer http://83.212.97.206:8000/radio.ogg'
 alias s='source ~/.zshrc'
+#alias git='hub'
+alias latex='latexmk -xelatex -8bit -shell-escape -pvc --synctex=1'
 
 #Flush DNS
 alias flushdns='dscacheutil -flushcache'
@@ -64,13 +72,26 @@ alias flushdns='dscacheutil -flushcache'
 alias parstart='sudo launchctl start com.parallels.desktop.launchdaemon'
 alias parstop='sudo launchctl stop com.parallels.desktop.launchdaemon'
 
-#Calculator
+# Calculator
 calc () { awk "BEGIN{ print $* }" ;}
-#Open in PathFinder
+# Open in PathFinder
 pf () { open -a "Path Finder.app" $1; }
+# Mount from alfred
+malf() {sshfs alfred: ~/alfred;}
+# mkdir and cd
+mkcd() {mkdir -p "$1" && cd "$1";}
+# Play Music
+mplay() {find ~/Music -type d -depth 1 -name "*$1*" -exec sh -c 'open -a vlc "$0"/*.mp3' {} \; 2>/dev/null }
+mplayart() {find ~/Music -type d -depth 1 -name "*$1*" -exec sh -c 'open -a vlc "$0"/*/*.mp3' {} \; 2>/dev/null }
+# Session restore
+sessionrestore() {perl -lne '$\ = qq{\n\n}; print for /url":"\K[^"]+/g' $1}
+# PDF Merge
+pdfmerge() {gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile=mergedPDF.pdf $@}
 
 #Welcome message
 echo -en '\033[0;34m'; figlet Indoril; echo -en '\033[0m'
 #Random quote on login!
 echo 'Remember:'
 f=~/quotes.txt; n=$(expr $RANDOM \* `cat $f | wc -l` \/ 32768 + 1); head -n $n $f | tail -1
+
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
