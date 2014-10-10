@@ -308,6 +308,7 @@ map n nzz
 " Make
 nnoremap cn <Esc>:cn<CR>
 nnoremap cp <Esc>:cp<CR>
+nnoremap cv <Esc>:cw<CR>
 
 " Testing
 set completeopt=longest,menuone,preview

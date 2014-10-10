@@ -29,18 +29,23 @@ ZSH_THEME="indoril"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(github git autojump extract macports osx brew gem pip)
+plugins=(github git autojump extract macports osx brew gem pip rvm systemadmin)
 
 export BAT_CHARGE='batcharge.py'
 
 source $ZSH/oh-my-zsh.sh
-source /Library/Frameworks/Python.framework/Versions/2.7/bin/virtualenvwrapper.sh
+#source /usr/local/bin/virtualenvwrapper.sh
 setopt HIST_IGNORE_SPACE # Hide commands that start with space
+# pip should only run if there is a virtualenv currently activated
+# export PIP_REQUIRE_VIRTUALENV=true
+# cache pip-installed packages to avoid re-downloading
+export PIP_DOWNLOAD_CACHE=$HOME/.pip/cache
 unsetopt correct_all
 
 # Customize to your needs...
 export EDITOR=/usr/local/bin/subl
-export PATH=~/.rvm/gems/ruby-1.9.3-p194/bin:/Users/indoril/.rvm/bin:/usr/local/bin:/usr/bin:/sw/sbin:/bin:/usr/sbin:/sbin:/usr/local/git/bin:/usr/local/MacGPG2/bin:/usr/texbin:/usr/X11/bin:/opt/local/bin:/opt/local/lib/swipl-5.10.4/bin/i386-darwin10.7.0::/usr/X11R6/bin:/sw/bin:~/bins/pypy-2.2.1/bin:~/Scripts:~/Source/checker:/sw/bin:/Library/Apache/ant/bin:~/bins:/usr/local/sbin:~/Library/Haskell/bin:~/bins/pypy3-2.1/bin:/Library/Frameworks/Python.framework/Versions/2.7/bin:/Library/Frameworks/Python.framework/Versions/3.3/bin:$PATH
+export PATH=~/.rvm/gems/ruby-1.9.3-p194/bin:/Users/indoril/.rvm/bin:/usr/local/bin:/usr/bin:/sw/sbin:/bin:/usr/sbin:/sbin:/usr/local/git/bin:/usr/local/MacGPG2/bin:/usr/texbin:/usr/X11/bin:/opt/local/bin:/opt/local/lib/swipl-5.10.4/bin/i386-darwin10.7.0:/usr/X11R6/bin:/sw/bin:~/bins/pypy-2.2.1/bin:~/Scripts:~/Source/checker:/sw/bin:/Library/Apache/ant/bin:~/bins:/usr/local/sbin:~/Library/Haskell/bin:~/bins/pypy3-2.1/bin:/Library/Frameworks/Python.framework/Versions/3.3/bin
+#/Library/Frameworks/Python.framework/Versions/2.7/bin:/Library/Frameworks/Python.framework/Versions/3.3/bin:$PATH
 
 #Custom aliases
 alias ping='ping -c 4'
@@ -87,9 +92,46 @@ mplayart() {find ~/Music -type d -depth 1 -name "*$1*" -exec sh -c 'open -a vlc 
 sessionrestore() {perl -lne '$\ = qq{\n\n}; print for /url":"\K[^"]+/g' $1}
 # PDF Merge
 pdfmerge() {gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile=mergedPDF.pdf $@}
+# VirtualEnv Activate
+venv() { export VIRTUAL_ENV_DISABLE_PROMPT='1'; source ./$1/bin/activate }
+# Autojump
+[[ -s `brew --prefix`/etc/autojump.sh ]] && . `brew --prefix`/etc/autojump.sh
 
 #Welcome message
 echo -en '\033[0;34m'; figlet Indoril; echo -en '\033[0m'
+
+findcpu(){
+    sysctl -n machdep.cpu.brand_string
+}
+
+findkernelversion(){
+    uname -mrs
+}
+
+mem=$(sysctl -n hw.memsize)
+
+echo " `tput sgr0`             .,-:;//;:=,                             `tput smso`  Aperture Science Terminal Info             `tput rmso`
+          . :H@@@MM@M#H/.,+%;,
+       ,/X+ +M@@M@MM%=,-%HMMM@X/,                       $(findcpu)
+     -+@MM; SM@@MH+-,;XMMMM@MMMM@+-                     `tput bold`RAM memory:`tput sgr0` $[$mem/1024/1024] MB
+    ;@M@@M- XM@X;. -+XXXXXHHH@M@M#@/.                   `tput bold`Kernel:`tput sgr0` $(findkernelversion)
+  ,%MM@@MH ,@%=            .---=-=:=,.
+  =@#@@@MX .,              -%HXSS%%%+;
+ =-./@M@MS                  .;@MMMM@MM:               `tput smso`  GLaDOS Monitor                             `tput rmso`
+ X@/ -SMM/                    .+MM@@@MS                                             `tput setaf 2`  ____ `tput sgr0`
+,@M@H: :@:                    . =X#@@@@-                `tput bold`System status:`tput sgr0`  `tput setaf 2`On           /   /`tput sgr0`
+,@@@MMX, .                    /H- ;@M@M=                `tput bold`Voice status:`tput sgr0`   `tput setaf 2`On     ___  /   /`tput sgr0`
+.H@@@@M@+,                    %MM+..%#S.                                       `tput setaf 2`\  \/   /`tput sgr0`
+ /MMMM@MMH/.                  XM@MH; =;                 `tput bold`Damaged:       `tput sgr0` `tput setaf 2`No      `tput setaf 2`\     /`tput sgr0`
+  /%+%SXHH@S=              , .H@@@@MX,                  `tput bold`Malfunctioning:`tput sgr0` `tput setaf 3`Maybe    `tput setaf 2`\___/`tput sgr0`
+   .=--------.           -%H.,@@@@@MX,
+    .%MM@@@HHHXXSSS%+- .:MMX =M@@MM%.
+     =XMMM@MM@MM#H;,-+HMM@M+ /MMMX=                   `tput smso`  Date and Time                              `tput rmso`
+       =%@M@M#@S-.=S@MM@@@M; %M%=
+         ':+S+-,/H#MMMMMMM@= ='                         `tput bold`Date:`tput sgr0` $(date +"%A %d %B %Y")
+               =++%%%%+/:-.                             `tput bold`Time:`tput sgr0` $(date +"%T")
+"
+
 #Random quote on login!
 echo 'Remember:'
 f=~/quotes.txt; n=$(expr $RANDOM \* `cat $f | wc -l` \/ 32768 + 1); head -n $n $f | tail -1
