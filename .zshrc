@@ -5,6 +5,8 @@ ZSH=$HOME/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
+#ZSH_THEME="avit"
+#ZSH_THEME="agnoster"
 ZSH_THEME="indoril"
 
 # Example aliases
@@ -29,7 +31,7 @@ ZSH_THEME="indoril"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(github git autojump extract macports osx brew gem pip rvm systemadmin hub)
+plugins=(git autojump extract macports osx brew gem pip rvm systemadmin git-flow hub github git-hubflow)
 
 export MAILPILE_HOME=$HOME/.mailpile
 
@@ -38,8 +40,6 @@ source $ZSH/oh-my-zsh.sh
 setopt HIST_IGNORE_SPACE # Hide commands that start with space
 # pip should only run if there is a virtualenv currently activated
 # export PIP_REQUIRE_VIRTUALENV=true
-# cache pip-installed packages to avoid re-downloading
-export PIP_DOWNLOAD_CACHE=$HOME/.pip/cache
 unsetopt correct_all
 
 # Customize to your needs...
@@ -49,8 +49,7 @@ export PATH=~/.rvm/gems/ruby-1.9.3-p194/bin:/Users/indoril/.rvm/bin:/usr/local/b
 
 #Custom aliases
 alias ping='ping -c 4'
-#alias grep='grep --color=auto'
-alias grep='/opt/local/bin/grep --color=auto'
+alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias l='ls -CF'
 alias la='ls -AF'
@@ -65,15 +64,14 @@ alias folders="ls -R | grep ':$' | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e '
 alias ips="ifconfig -a | perl -nle'/(\d+\.\d+\.\d+\.\d+)/ && print $1'"
 alias ftpstart='sudo -s launchctl load -w /System/Library/LaunchDaemons/ftp.plist'
 alias ftpstop='sudo -s launchctl unload -w /System/Library/LaunchDaemons/ftp.plist'
-alias music='mplayer http://83.212.97.206:8000/radio.ogg'
 alias s='source ~/.zshrc'
-alias git='hub'
+#alias git='hub'
 alias latex='latexmk -xelatex -8bit -shell-escape -pvc --synctex=1'
 alias mailpile='/Applications/Mailpile.app/Contents/Resources/Mailpile/packages/macosx/mailpile-osx.sh ; exit;'
 # Upgrade pip packages
 alias pipup='sudo pip install --upgrade $(yolk -U | cut -d" " -f 2)'
 # Backup dotfiles (NOT keys)
-alias dotback='tar czf ~/dotfiles/`date +"%Y-%m-%d"`.tar.gz .bash_profile .bashrc .config/hub .config/mpv .electrum/wallets .electrum/config .gemrc .irbrc .irssi .kamakirc .local .macports .mutt/gpg.rc .mutt/mutt-colors-solarized .mutt/passwords .muttrc .oh-my-zsh .rvmrc .vim .vimrc .wgetrc .zlogin .zprofile .zsh-update .zsh_history .zshrc'
+alias dotback="cd; tar czf ~/dotfiles/`date +"%Y-%m-%d"`.tar.gz .bash_profile .bashrc .config/hub .config/mpv .electrum/wallets .electrum/config .gemrc .irbrc .irssi .kamakirc .mutt/certificates .mutt/gpg.rc .mutt/mutt-colors-solarized .mutt/passwords  .muttrc .oh-my-zsh .rvmrc .vim/colors .vim/ftdetect .vim/ftplugin .vim/indent .vimrc .wgetrc .zsh_history .zshrc ; cd -"
 
 #Flush DNS
 alias flushdns='dscacheutil -flushcache'
@@ -81,6 +79,9 @@ alias flushdns='dscacheutil -flushcache'
 #Parallels Desktop daemon
 alias parstart='sudo launchctl start com.parallels.desktop.launchdaemon'
 alias parstop='sudo launchctl stop com.parallels.desktop.launchdaemon'
+
+# The fuck corrections
+alias fuck='$(thefuck $(fc -ln -1))'
 
 # Calculator
 calc () { awk "BEGIN{ print $* }" ;}
